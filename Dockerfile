@@ -39,6 +39,9 @@ ENV NEXT_PUBLIC_CLIENT_NAME=${NEXT_PUBLIC_CLIENT_NAME}
 ARG NEXT_PUBLIC_LOGO_URL
 ENV NEXT_PUBLIC_LOGO_URL=${NEXT_PUBLIC_LOGO_URL}
 
+ARG NEXT_PUBLIC_API_URL_CSF
+ENV NEXT_PUBLIC_API_URL_CSF=${NEXT_PUBLIC_API_URL_CSF}
+
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 # ENV NEXT_TELEMETRY_DISABLED 1
@@ -85,6 +88,9 @@ ENV NEXT_PUBLIC_CLIENT_NAME=${NEXT_PUBLIC_CLIENT_NAME}
 
 ARG NEXT_PUBLIC_LOGO_URL
 ENV NEXT_PUBLIC_LOGO_URL=${NEXT_PUBLIC_LOGO_URL}
+
+ARG NEXT_PUBLIC_API_URL_CSF
+ENV NEXT_PUBLIC_API_URL_CSF=${NEXT_PUBLIC_API_URL_CSF}
 # Uncomment the following line to disable telemetry at run time
 # ENV NEXT_TELEMETRY_DISABLED 1
 
