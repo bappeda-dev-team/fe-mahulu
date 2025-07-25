@@ -1,5 +1,5 @@
 import { FiHome } from "react-icons/fi";
-import { FormOutcome } from "../FormOutcome";
+import { FormOutcome } from "../../FormOutcome";
 
 const TambahTematikKab = () => {
     return(

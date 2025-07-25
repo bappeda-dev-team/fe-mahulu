@@ -13,16 +13,16 @@ const Outcome = () => {
 
     useEffect(() => {
         const data = getOpdTahun();
-        if(data.tahun){
+        if (data.tahun) {
             const tahun = {
                 value: data.tahun.value,
                 label: data.tahun.label,
             }
             setTahun(tahun);
         }
-    },[]);
+    }, []);
 
-    return(
+    return (
         <>
             <div className="flex items-center">
                 <a href="/" className="mr-1"><FiHome /></a>
@@ -34,15 +34,6 @@ const Outcome = () => {
                     <div className="flex flex-wrap items-end">
                         <h1 className="uppercase font-bold">Outcome</h1>
                         <h1 className="uppercase font-bold ml-1">{Tahun ? Tahun?.label : ""}</h1>
-                    </div>
-                    <div className="flex flex-col">
-                        <ButtonSky 
-                            className="flex items-center justify-center"
-                            halaman_url='/outcome/tambah'
-                        >
-                            <TbCirclePlus className="mr-1"/>
-                            Tambah Data
-                        </ButtonSky>
                     </div>
                 </div>
                 <Table />
