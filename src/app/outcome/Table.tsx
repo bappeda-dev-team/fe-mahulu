@@ -180,7 +180,7 @@ const Table = () => {
     }, [branding, Sub, Outcome]);
 
     const hapusOutcome = async (id: any) => {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL;
+        const API_URL = process.env.NEXT_PUBLIC_API_URL_CSF;
         try {
             const response = await fetch(`${API_URL}/outcome/${id}`, {
                 method: "DELETE",
@@ -188,11 +188,15 @@ const Table = () => {
                     // Authorization: `${token}`,
                     'Content-Type': 'application/json',
                 },
-            })
+            });
+            const result = await response.json();
             if (!response.ok) {
                 alert("cant fetch data")
+                console.log(result);
             }
-            router.push('/outcome');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000); //reload halaman dengan delay 1 detik
             AlertNotification("Berhasil", "Data Outcome Berhasil Dihapus", "success", 1000);
         } catch (err) {
             AlertNotification("Gagal", "cek koneksi internet atau database server", "error", 2000);
