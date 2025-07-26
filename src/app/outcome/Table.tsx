@@ -9,6 +9,7 @@ import { getOpdTahun } from "@/components/lib/Cookie";
 import { TahunNull } from "@/components/global/OpdTahunNull";
 import { getToken } from "@/components/lib/Cookie";
 import { useBrandingContext } from "@/context/BrandingContext";
+import { useRouter } from 'next/navigation';
 
 interface Data {
     id: number;
@@ -59,6 +60,7 @@ const Table = () => {
     const [Tahun, setTahun] = useState<any>(null);
     const [SelectedOpd, setSelectedOpd] = useState<any>(null);
     const token = getToken();
+    const router = useRouter();
     const { branding } = useBrandingContext();
 
     const [CSF, setCSF] = useState<CSF[]>([]);
@@ -177,6 +179,26 @@ const Table = () => {
         setGabunganOutcome(gabungan);
     }, [branding, Sub, Outcome]);
 
+    const hapusOutcome = async (id: any) => {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL;
+        try {
+            const response = await fetch(`${API_URL}/outcome/${id}`, {
+                method: "DELETE",
+                headers: {
+                    // Authorization: `${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+            if (!response.ok) {
+                alert("cant fetch data")
+            }
+            router.push('/outcome');
+            AlertNotification("Berhasil", "Data Outcome Berhasil Dihapus", "success", 1000);
+        } catch (err) {
+            AlertNotification("Gagal", "cek koneksi internet atau database server", "error", 2000);
+        }
+    };
+
     if (Loading) {
         return (
             <div className="border p-5 rounded-xl shadow-xl">
@@ -256,13 +278,13 @@ const Table = () => {
                                                                 <ButtonSky className="w-full" halaman_url={`/outcome/tambah/${ol.id}?id_parent=${ol.parent}`}>Input Outcome</ButtonSky>
                                                             ) : (
                                                                 <>
-                                                                    <ButtonGreen className="w-full" halaman_url={`/outcome/${ol.id_outcome}`}>Edit</ButtonGreen>
+                                                                    <ButtonGreen className="w-full" halaman_url={`/outcome/${ol.id_outcome}?pohon_id=${ol.id}`}>Edit</ButtonGreen>
                                                                     <ButtonRed
                                                                         className="w-full"
                                                                         onClick={() => {
                                                                             AlertQuestion("Hapus?", "Hapus Data Outcome yang dipilih?", "question", "Hapus", "Batal").then((result) => {
                                                                                 if (result.isConfirmed) {
-                                                                                    // hapusOutcome(ol.id);
+                                                                                    hapusOutcome(ol.id_outcome);
                                                                                 }
                                                                             });
                                                                         }}
@@ -334,7 +356,7 @@ function gabungData(subs: any, outcomes: any) {
                 id: sub.id,
                 id_outcome: outcomeEntry.id,
                 parent: sub.parent,
-                faktor_berpengaruh: outcomeEntry.faktor_berpengaruh,
+                faktor_berpengaruh: outcomeEntry.faktor_outcome,
                 data_terukur: outcomeEntry.data_terukur,
                 tema: sub.tema,
                 indikator: sub.indikator,

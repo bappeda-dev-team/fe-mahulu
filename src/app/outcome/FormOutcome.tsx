@@ -36,7 +36,7 @@ export const FormOutcome = () => {
     const id_parent = params.get('id_parent');
 
     const onSubmit: SubmitHandler<FormValue> = async (data) => {
-        const API_URL_CSF = process.env.NEXT_PUBLIC_API_URL_CSF;    
+        const API_URL_CSF = process.env.NEXT_PUBLIC_API_URL_CSF;
         const formData = {
             //key : value
             pohon_id: Number(id),
@@ -149,13 +149,17 @@ export const FormEditOutcome = () => {
 
     const {
         control,
+        reset,
         handleSubmit,
         formState: { errors },
     } = useForm<FormValue>();
     const [Proses, setProses] = useState<boolean>(false);
     const [Loading, setLoading] = useState<boolean>(false);
     const { branding } = useBrandingContext();
+    const params = useSearchParams();
+    const router = useRouter();
     const { id } = useParams();
+    const id_pohon = params.get("pohon_id");
 
     useEffect(() => {
         const API_URL_CSF = process.env.NEXT_PUBLIC_API_URL_CSF;
@@ -171,50 +175,65 @@ export const FormEditOutcome = () => {
                     throw new Error('terdapat kesalahan di koneksi backend');
                 }
                 const result = await response.json();
-                if(result.code === 200){
-
+                const data = result.data;
+                // console.log(data);
+                if (result.code === 200) {
+                    reset({
+                        faktor_outcome: data.faktor_outcome,
+                        data_terukur: data.data_terukur,
+                    })
                 } else {
                     console.log(result.data);
                 }
-            } catch(err){
+            } catch (err) {
                 console.log(err);
             } finally {
                 setLoading(false);
             }
         }
+        fetchById();
     }, []);
 
     const onSubmit: SubmitHandler<FormValue> = async (data) => {
         const formData = {
             //key : value
-            pohon_id: id,
+            pohon_id: Number(id_pohon),
             tahun: String(branding?.tahun?.value),
             faktor_outcome: data.faktor_outcome,
             data_terukur: data.data_terukur,
         };
-        console.log(formData);
-        // try {
-        //     setProses(true);
-        //     const response = await fetch(`${API_URL}/pohon_kinerja_admin/create`, {
-        //         method: "POST",
-        //         headers: {
-        //             Authorization: `${token}`,
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(formData),
-        //     });
-        //     if (response.ok) {
-        //         AlertNotification("Berhasil", "Berhasil menambahkan data tematik pemda", "success", 1000);
-        //         router.push("/outcome");
-        //     } else {
-        //         AlertNotification("Gagal", "terdapat kesalahan pada backend / database server", "error", 2000);
-        //     }
-        // } catch (err) {
-        //     AlertNotification("Gagal", "cek koneksi internet/terdapat kesalahan pada database server", "error", 2000);
-        // } finally {
-        //     setProses(false);
-        // }
+        // console.log(formData);
+        try {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL_CSF;
+            setProses(true);
+            const response = await fetch(`${API_URL}/outcome/${id}`, {
+                method: "PUT",
+                headers: {
+                    // Authorization: `${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (response.ok) {
+                AlertNotification("Berhasil", "Berhasil Mengubah data Outcome", "success", 1000);
+                router.push("/outcome");
+            } else {
+                AlertNotification("Gagal", "terdapat kesalahan pada backend / database server", "error", 2000);
+            }
+        } catch (err) {
+            AlertNotification("Gagal", "cek koneksi internet/terdapat kesalahan pada database server", "error", 2000);
+        } finally {
+            setProses(false);
+        }
     };
+
+    if (Loading) {
+        return (
+            <div className="border p-5 rounded-xl shadow-xl">
+                <LoadingClip className="mx-5 py-5" />
+            </div>
+        );
+    }
 
     return (
         <>
