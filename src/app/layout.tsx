@@ -83,10 +83,10 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
     }
 
     return (
-        <html lang="en" className={font.className}>
+        <html lang="en" className={`${font.className} notranslate`} translate="no">
             <head>
                 <title>KAK Pemda</title>
-                <meta name="description" content="Aplikasi KAK" />
+                <meta name="description" content="Aplikasi Kinerja Pembangunan Daerah Pemda" />
                 <meta name="google" content="notranslate" />
                 <link
                     rel="icon"
