@@ -1,5 +1,5 @@
 import { FiHome } from "react-icons/fi";
-import { FormOutcome } from "../FormOutcome";
+import { FormEditOutcome } from "../FormOutcome";
 
 const TambahTematikKab = () => {
     return (
@@ -10,7 +10,7 @@ const TambahTematikKab = () => {
                 <p className="mr-1">/ Outcome</p>
                 <p className="mr-1">/ Edit</p>
             </div>
-            <FormOutcome />
+            <FormEditOutcome />
         </>
     )
 }

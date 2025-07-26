@@ -253,10 +253,10 @@ const Table = () => {
                                                     <td className="border-r border-b px-6 py-4">
                                                         <div className="flex flex-col justify-center items-center gap-2">
                                                             {ol.id_outcome === null ? (
-                                                                <ButtonSky className="w-full" halaman_url={`/outcome/tambah/${ol.id}`}>Input Outcome</ButtonSky>
+                                                                <ButtonSky className="w-full" halaman_url={`/outcome/tambah/${ol.id}?id_parent=${ol.parent}`}>Input Outcome</ButtonSky>
                                                             ) : (
                                                                 <>
-                                                                    <ButtonGreen className="w-full" halaman_url={`/outcome/tambah/${ol.id}`}>Edit</ButtonGreen>
+                                                                    <ButtonGreen className="w-full" halaman_url={`/outcome/${ol.id_outcome}`}>Edit</ButtonGreen>
                                                                     <ButtonRed
                                                                         className="w-full"
                                                                         onClick={() => {
