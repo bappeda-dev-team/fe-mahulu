@@ -59,7 +59,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
 
     if (loginPage) {
         return (
-            <html lang="en" className={font.className}>
+            <html lang="en" className={`${font.className} notranslate`} translate="no">
                 <head>
                     <title>KAK Pemda</title>
                     <meta name="description" content="Aplikasi Kinerja Pembangunan Daerah Pemda" />
