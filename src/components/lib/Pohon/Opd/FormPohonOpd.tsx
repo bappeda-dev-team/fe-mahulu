@@ -63,6 +63,7 @@ export const FormPohonOpd: React.FC<{
     const [IsAdded, setIsAdded] = useState<boolean>(false);
     const [Deleted, setDeleted] = useState<boolean>(false);
     const [Proses, setProses] = useState<boolean>(false);
+    const [Loading, setLoading] = useState<boolean>(false);
     const [user, setUser] = useState<any>(null);
     const token = getToken();
 
@@ -739,7 +740,7 @@ export const FormEditPohon: React.FC<{
                                     :
                                     <span className="flex items-center gap-1 ">
                                         <TbDeviceFloppy />
-                                        Menyimpan...
+                                        Simpan
                                     </span>
                                 }
                             </ButtonSky>
